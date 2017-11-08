@@ -41,4 +41,4 @@ print('\n', formatted_text.format('Word', *chunk_names), '\n')
 for word, item in zip(vocabulary, document_term_matrix.T):
     # 'item' 은 희소 행렬 'csr_matrix'는 데이터 구조체
     output = [word] + [str(freq) for freq in item.data]
-    print(formatted_text.format(*output))
+    print(formatted_text.format(*output)) 
