@@ -110,8 +110,8 @@ Probability: 0.82
 
 ******************************************************************************************************************************
 
-## 가설 검증 중에 알아낸 것 
-1. 결과의 윗부분에 나타나는 Accuracy와 Informative words 등의 정보는 내가 입력한 리뷰에 대한 정보가 아니고, nltk.corpus의 movie_reviews에 저장되어 있는 1000개의 positive reviews와 1000개의 negative reviews에 대한 것이다. 즉, 이 내용들은 내가 입력한 리뷰들과 아무런 관련이 없다. **그러므로 이 뒤부터는 결과 부분의 'Movie review predictions: ' 이후만 표기하겠다.**
+## 가설 검증 중 알아낸 것 
+1. 결과의 윗부분에 나타나는 Accuracy와 Informative words 등의 정보는 내가 입력한 리뷰에 대한 정보가 아니고, nltk.corpus의 movie_reviews에 저장되어 있는 1000개의 positive reviews와 1000개의 negative reviews에 대한 것이다. 즉, 이 내용들은 내가 입력한 리뷰들과 아무런 관련이 없다. **그러므로 이 뒤부터는 결과 부분의 'Movie review predictions: ' 이후만 표기한다.**
 
 2. threshold(한계치)로 설정한 값은 test 데이터와 training 데이터를 나누는 기준이 되는 수치인데, 어떤 것을 나타내는 지는 정확히 파악하지 못했지만, accuracy of the classifier와 각각의 probability에 영향을 준다. 
 
