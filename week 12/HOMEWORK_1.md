@@ -2,12 +2,18 @@
 이번 과제를 위해 영화 *스포트라이트(Spotlight, 2015)* 를 선택하여 영화의 리뷰를 분석하였다. 또한, sentiment analyzer 패키지를 테스트해보기 위해 몇 개의 가설을 세우고 증명해보았다.
 
 
+
 ## 영화 소개
+
+![Image](https://cdn-images-1.medium.com/max/1200/1*ErHfNzwX8oBwSbcJALSxcw.jpeg)
+
  *스포트라이트*는 2015년에 개봉한 미국의 드라마 영화이다. 가톨릭 교회 사제에 의한 아동 성추행을 보도한 《보스턴 글로브》 기자들의 이야기를 다루고 있다. 실화에 기반한 영화로서, 실제로 이 기사를 보도한 스포트라이트 팀은 퓰리처 상을 수상하기도 했다. 2015년 제88회 아카데미 시상식 최우수작품상, 각본상 수상작이다.
 
 
+
 ## 리뷰 수집
-영화 정보 모음 사이트 [IMDb](https://imdb.com/) 에서 리뷰를 수집하였다. 분석의 다양성을 위해 IMDb에서 제공하는 다양한 필터를 사용하여 여러가지 성격의 리뷰를 수집하였다.
+영화 정보 모음 사이트 [IMDb](https://www.imdb.com/) 에서 리뷰를 수집하였다. 분석의 다양성을 위해 IMDb에서 제공하는 다양한 필터를 사용하여 여러가지 성격의 리뷰를 수집하였다.
+
 
 
 ## 가설 설정
@@ -18,6 +24,7 @@
 - 가설 3. 긍정적인 리뷰들 중, 스포일러가 포함된 리뷰는 그렇지 않은 리뷰보다 정확도 점수가 더 높을 것이다.
 
 
+
 ## 가설 설정 이유
 - 가설 1: 영어로 글을 쓸 때, 의미를 강조하기 위해서 강조하고자 하는 표현을 대문자로 쓰는 경우가 있다. 예를 들어 ‘이 배우의 연기는 정말 뛰어났다.’를 영어로 쓸 때, ‘The actor’s performance was outstanding.’ 보다는 같은 문장이어도 ‘The actor’s performance was OUTSTANDING.’이라고 쓰면 문장의 의미가 더욱 강조된다. 이와 같은 현상을 sentiment analyzer에서도 잡아낼 수 있을지 시험해보기 위해 가설 1을 설정하였다.
 
@@ -26,8 +33,10 @@
 - 가설 3: IMDb는 리뷰가 스포일러를 포함할 가능성이 있는 경우 *** This review may contain spoilers *** 라는 문구를 리뷰의 첫 줄에 보여준다. 긍정적인 리뷰가 스포일러를 포함할 경우에, 영화의 내용을 예로 들면서 ‘어느 부분이 재밌었다’는 식의 보다 자세하고 명확하게 긍정적인 표현을 썼을 것이라 생각해서 가설 3을 설정하였다.
 
 
+
 ## 리뷰 선정
 가설 1의 증명을 위해서 긍정적 리뷰 한 개, 부정적 리뷰 한 개를 사용하였고, 가설 2와 3의 증명을 위해서는 긍정적 리뷰 두 개를 사용하였다.
+
 
 
 ## 긍정적 리뷰
@@ -63,12 +72,14 @@ It was good that the film focused on how the conspiracy into the abuse was cover
 영화가 그 학대가 어떻게 감춰졌는지에 초점을 맞춘 점은 좋았다; 개인적 의견으로는 피해자들에게 초점을 맞추고 그들을 더 괴롭게 하는 것 보다는 이 방식이 좋았다. 이 사건이 얼마나 심각했는지 (아마 여전히 일어날 수도 있지만), 그리고 얼마나 많은 피해자가 있었는지를 생각하니 눈물이 났다. 아동 학대 관련 범죄학 학위를 가지고 있는 사람으로서, 이 영화는 특히 가슴이 아팠다. 영화의 마지막에 아동 학대 사실이 밝혀진 지역들의 리스트가 나온다; 가슴이 찢어지는 심정이었다.
 
 
+
 ## 부정적 리뷰
 I get why movies like this get nominated for Best Picture. Seriously though, it's just dull. There is nothing in this movie that is cinematically interesting. Compare this to a movie like Steve Jobs (2015) which is also very dialogue heavy and note all the various ways in which Boyle and crew aid their dialogue through camera movement, interesting angles and shadowing, etc. It makes you realize how thoroughly uninteresting Spotlight is in that particular way. Spotlight could have been done as a picture book with a few sentences of dialogue per page and Mark Ruffalo's happy face or sad face plastered on top.
 3 stars though just because a very interesting subject.
 
 왜 이런 류의 영화가 최우수작품상을 수상하는 지는 알겠다. 그런데 정말 이 영화는 따분하다. 이 영화에는 작품적으로 흥미로운 부분이 전혀 없다. 2015년 영화인 ‘스티브 잡스’와 이 영화를 비교해 보아라. ‘스티브 잡스는’ 무거운 주제를 담았지만 보일과 제작진들은 카메라 이동, 흥미로운 각도, 셰도잉 등을 이용하여 다양한 방식을 이용했다. 그 영화는 ‘스포트라이트’가 그러한 부분에서 얼마나 철저하게 재미없는 영화인지 알게 해줄 것이다. ‘스포트라이트는’ 페이지마다 몇 문장정도 써 있고, 마크 러팔로의 행복한 표정이나 슬픈 표정으로 위에 도배가 돼있는 그림책으로 만들어도 됐을 뻔했다.
 그래도 주제는 매우 흥미로우니 별 세 개를 주겠다.
+
 
 
 ## 가설 검증
@@ -588,10 +599,12 @@ Review: It won best film, deservedly so. This is a film that resonated with me l
 Predicted sentiment: Positive
 Probability: 0.82
 ```
->필터에서 아래에 위치한 리뷰의 점수가 더 낮게 나왔다.
+>필터에서 위에 위치한 리뷰의 점수가 더 게 나왔다.
+
 
 
 ### 가설 3. 긍정적인 리뷰들 중, 스포일러가 포함된 리뷰는 그렇지 않은 리뷰보다 정확도 점수가 더 높을 것이다.
+
 
 **증명 3-1.** 스포일러가 포함된 리뷰
 
@@ -657,6 +670,7 @@ Review: *** This review may contain spoilers *** For me this film was beautifull
 Predicted sentiment: Positive
 Probability: 1.0
 ```
+
 
 **증명 3-2.** 스포일러가 포함되지 않은 리뷰
 
@@ -727,5 +741,15 @@ Probability: 0.82
 
 
 
-
 ### 가설 검증 결과
+- [ ] **가설 1**: 주요 단어를 소문자에서 대문자로 바꿔 쓰면 정확도 점수가 더 높아질 것이다.
+
+→ 완전히 긍정적이거나 부정적인 단어가 많이 쓰인 리뷰가 아니면 그렇지 않은 결과가 나온 경우가 많았다. 
+
+- [x] **가설 2**: ‘Best’ 필터에서 더 위에 위치한 리뷰일수록 정확도 점수가 더 높을 것이다.
+
+- [x] **가설 3**: 긍정적인 리뷰들 중, 스포일러가 포함된 리뷰는 그렇지 않은 리뷰보다 정확도 점수가 더 높을 것이다.
+
+
+### 결론
+이 글에 사용된 sentiment analyzer의 코드로 영화 리뷰의 완벽한 감정 분석을 하기에는 아직 어려움이 따랐다. 이유는 1) 위에서도 밝혔듯, 윗 부분의 코드가 패키지에 저장되어 있는 영화 리뷰만을 대상으로 하므로 실제 사용자가 입력한 리뷰를 반영하지 못했고, 2) 긍정적, 부정적 의미를 동시에 내포한 단어를 제대로 파악하지 못했으며, 3) 실제 사용되는 언어의 표현을 제대로 못하는 등의 한계를 보였기 때문이다. **하지만** 몇몇 가설의 증명에서는 유의미한 결과를 보여줬으므로, 좀 더 보완된다면 실제 감정 분석에 유용하게 쓰일 수 있을 것이다.
