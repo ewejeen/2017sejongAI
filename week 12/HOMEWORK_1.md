@@ -1,36 +1,36 @@
-## Sentiment Analysis - Movie Reviews
+# Sentiment Analysis - Movie Reviews
 이번 과제를 위해 영화 *스포트라이트(Spotlight, 2015)*를 선택하여 영화의 리뷰를 분석하였다. 또한, sentiment analyzer 패키지를 테스트해보기 위해 몇 개의 가설을 세워 증명해보았다.
 
 
-### 영화 소개
+## 영화 소개
  *스포트라이트*는 2015년에 개봉한 미국의 드라마 영화이다. 가톨릭 교회 사제에 의한 아동 성추행을 보도한 《보스턴 글로브》 기자들의 이야기를 다루고 있다. 실화에 기반한 영화로서, 실제로 이 기사를 보도한 스포트라이트 팀은 퓰리처 상을 수상하기도 했다. 2015년 제88회 아카데미 시상식 최우수작품상, 각본상 수상작이다.
 
 
-### 리뷰 수집
+## 리뷰 수집
 영화 정보 모음 사이트 `imdb.com` 에서 리뷰를 수집하였다. 분석의 다양성을 위해 IMDb에서 제공하는 다양한 필터를 사용하여 여러가지 성격의 리뷰를 수집하였다.
 
 
-### 가설 설정
-가설 1. 주요 단어를 소문자에서 대문자로 바꿔 쓰면 정확도 점수가 더 높아질 것이다.
+## 가설 설정
+- 가설 1. 주요 단어를 소문자에서 대문자로 바꿔 쓰면 정확도 점수가 더 높아질 것이다.
 
-가설 2. ‘Best’ 필터에서 더 위에 위치한 리뷰일수록 정확도 점수가 더 높을 것이다.
+- 가설 2. ‘Best’ 필터에서 더 위에 위치한 리뷰일수록 정확도 점수가 더 높을 것이다.
 
-가설 3. 긍정적인 리뷰들 중, 스포일러가 포함된 리뷰는 그렇지 않은 리뷰보다 정확도 점수가 더 높을 것이다.
-
-
-### 가설 설정 이유
-가설 1: 영어로 글을 쓸 때, 의미를 강조하기 위해서 강조하고자 하는 표현을 대문자로 쓰는 경우가 있다. 예를 들어 ‘이 배우의 연기는 정말 뛰어났다.’를 영어로 쓸 때, ‘The actor’s performance was outstanding.’ 보다는 같은 문장이어도 ‘The actor’s performance was OUTSTANDING.’이라고 쓰면 문장의 의미가 더욱 강조된다. 이와 같은 현상을 sentiment analyzer에서도 잡아낼 수 있을지 시험해보기 위해 가설 1을 설정하였다.
-
-가설 2: IMDb의 유저 리뷰에서는 여러가지 필터를 제공한다. 그 중 Best 필터는 (추정컨대) 더 많은 사용자가 ‘도움이 되었다’는 평가를 준 순으로 리뷰를 보여준다. 그러므로 더 위에 위치한 리뷰일수록 정확도 점수가 더 높을 것이라 생각했고, 이를 시험해보기 위해 가설 2를 설정하였다.
-
-가설 3: IMDb는 리뷰가 스포일러를 포함할 가능성이 있는 경우 *** This review may contain spoilers *** 라는 문구를 리뷰의 첫 줄에 보여준다. 긍정적인 리뷰가 스포일러를 포함할 경우에, 영화의 내용을 예로 들면서 ‘어느 부분이 재밌었다’는 식의 보다 자세하고 명확하게 긍정적인 표현을 썼을 것이라 생각해서 가설 3을 설정하였다.
+- 가설 3. 긍정적인 리뷰들 중, 스포일러가 포함된 리뷰는 그렇지 않은 리뷰보다 정확도 점수가 더 높을 것이다.
 
 
-### 리뷰 선정
+## 가설 설정 이유
+- 가설 1: 영어로 글을 쓸 때, 의미를 강조하기 위해서 강조하고자 하는 표현을 대문자로 쓰는 경우가 있다. 예를 들어 ‘이 배우의 연기는 정말 뛰어났다.’를 영어로 쓸 때, ‘The actor’s performance was outstanding.’ 보다는 같은 문장이어도 ‘The actor’s performance was OUTSTANDING.’이라고 쓰면 문장의 의미가 더욱 강조된다. 이와 같은 현상을 sentiment analyzer에서도 잡아낼 수 있을지 시험해보기 위해 가설 1을 설정하였다.
+
+- 가설 2: IMDb의 유저 리뷰에서는 여러가지 필터를 제공한다. 그 중 Best 필터는 ~~(추정컨대)~~ 더 많은 사용자가 ‘도움이 되었다’는 평가를 준 순으로 리뷰를 보여준다. 그러므로 더 위에 위치한 리뷰일수록 정확도 점수가 더 높을 것이라 생각했고, 이를 시험해보기 위해 가설 2를 설정하였다.
+
+- 가설 3: IMDb는 리뷰가 스포일러를 포함할 가능성이 있는 경우 *** This review may contain spoilers *** 라는 문구를 리뷰의 첫 줄에 보여준다. 긍정적인 리뷰가 스포일러를 포함할 경우에, 영화의 내용을 예로 들면서 ‘어느 부분이 재밌었다’는 식의 보다 자세하고 명확하게 긍정적인 표현을 썼을 것이라 생각해서 가설 3을 설정하였다.
+
+
+## 리뷰 선정
 가설 1의 증명을 위해서 긍정적 리뷰 한 개, 부정적 리뷰 한 개를 사용하였고, 가설 2와 3의 증명을 위해서는 긍정적 리뷰 두 개를 사용하였다.
 
 
-### 긍정적 리뷰:
+## 긍정적 리뷰
 
 1.
 
@@ -63,7 +63,7 @@ It was good that the film focused on how the conspiracy into the abuse was cover
 영화가 그 학대가 어떻게 감춰졌는지에 초점을 맞춘 점은 좋았다; 개인적 의견으로는 피해자들에게 초점을 맞추고 그들을 더 괴롭게 하는 것 보다는 이 방식이 좋았다. 이 사건이 얼마나 심각했는지 (아마 여전히 일어날 수도 있지만), 그리고 얼마나 많은 피해자가 있었는지를 생각하니 눈물이 났다. 아동 학대 관련 범죄학 학위를 가지고 있는 사람으로서, 이 영화는 특히 가슴이 아팠다. 영화의 마지막에 아동 학대 사실이 밝혀진 지역들의 리스트가 나온다; 가슴이 찢어지는 심정이었다.
 
 
-### 부정적 리뷰
+## 부정적 리뷰
 I get why movies like this get nominated for Best Picture. Seriously though, it's just dull. There is nothing in this movie that is cinematically interesting. Compare this to a movie like Steve Jobs (2015) which is also very dialogue heavy and note all the various ways in which Boyle and crew aid their dialogue through camera movement, interesting angles and shadowing, etc. It makes you realize how thoroughly uninteresting Spotlight is in that particular way. Spotlight could have been done as a picture book with a few sentences of dialogue per page and Mark Ruffalo's happy face or sad face plastered on top.
 3 stars though just because a very interesting subject.
 
@@ -71,13 +71,13 @@ I get why movies like this get nominated for Best Picture. Seriously though, it'
 그래도 주제는 매우 흥미로우니 별 세 개를 주겠다.
 
 
-### 가설 검증
+## 가설 검증
 
-가설 1. 주요 단어를 소문자에서 대문자로 바꿔 쓰면 정확도 점수가 더 높아질 것이다.
+### 가설 1. 주요 단어를 소문자에서 대문자로 바꿔 쓰면 정확도 점수가 더 높아질 것이다.
 
-증명 1-1. 긍정적 리뷰
+**증명 1-1.** 긍정적 리뷰
 
-코드
+- 코드
 
 ``` python
 from nltk.corpus import movie_reviews
@@ -133,7 +133,7 @@ for review in input_reviews:
 
 ```
 
-결과
+- 결과
 
 ```
 Number of training datapoints: 1600
@@ -165,9 +165,19 @@ Predicted sentiment: Positive
 Probability: 0.82
 ```
 
-증명 1-1-1. best film과 just brilliant 라는 표현을 대문자로 표현해 보았다.
+******************************************************************************************************************************
 
-코드
+## 가설 검증 중에 알아낸 것 
+1. 결과의 윗부분에 나타나는 Accuracy와 Informative words 등의 정보는 내가 입력한 리뷰에 대한 정보가 아니고, nltk.corpus의 movie_reviews에 저장되어 있는 1000개의 positive reviews와 1000개의 negative reviews에 대한 것이다. 즉, 이 내용들은 내가 입력한 리뷰들과 아무런 관련이 없다. **그러므로 이 뒤부터는 결과 부분의 'Movie review predictions: ' 이후만 표기하겠다.**
+
+2. threshold(한계치)로 설정한 값은 test 데이터와 training 데이터를 나누는 기준이 되는 수치인데, 어떤 것을 나타내는 지는 정확히 파악하지 못했지만, accuracy of the classifier와 각각의 probability에 영향을 준다. 
+
+******************************************************************************************************************************
+
+
+**증명 1-1-1.** best film과 just brilliant 라는 표현을 대문자로 표현해 보았다.
+
+- 코드
 
 ```python
 from nltk.corpus import movie_reviews
@@ -222,7 +232,7 @@ for review in input_reviews:
     print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
 ```
 
-결과
+- 결과
 
 ```
 Movie review predictions:
@@ -234,7 +244,9 @@ Probability: 0.77
 > Probaility 수치가 오히려 감소한 것을 볼 수 있다.
 
 
-증명 1-1-2. best film, just brilliant, riveting을 대문자로 표현해 보았다.
+**증명 1-1-2.** best film, just brilliant, riveting을 대문자로 표현해 보았다.
+
+- 코드
 
 ```python
 from nltk.corpus import movie_reviews
@@ -289,7 +301,7 @@ for review in input_reviews:
     print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
 ```
 
-결과
+- 결과
 ```
 Movie review predictions:
 
@@ -300,15 +312,10 @@ Probability: 0.58
 > Sentiment가 Negative로 바뀌었으며, Probaility 수치도 감소하였다.
 
 
-증명 1-2. 부정적
 
-### 가설 검증 중에 알아낸 것
-결과의 윗부분에 나타나는 Accuracy와 Informative words는 내가 입력한 리뷰에 대한 정보가 아니고, nltk.corpus의 movie_reviews에 저장되어 있는 1000개의 positive reviews와 1000개의 negative reviews에 대한 것이다. 즉, 이 내용들은 내가 입력한 리뷰들과 아무런 관련이 없다. threshold(한계치)로 설정한 값은 test 데이터와 training 데이터를 나누는 기준이 되는 수치인데, 어떤 것을 나타내는 지는 정확히 모르겠지만, accuracy of the classifier와 각각의 probability에 영향을 준다.
+**증명 1-2.** 부정적 리뷰
 
-
-증명 1-2. 부정적 리뷰
-
-코드
+- 코드
 ```python
 from nltk.corpus import movie_reviews
 from nltk.classify import NaiveBayesClassifier
@@ -364,7 +371,7 @@ for review in input_reviews:
     print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
 ```
 
-결과
+- 결과
 ```
 Movie review predictions:
 
@@ -374,9 +381,10 @@ Probability: 0.5
 ```
 >분명한 부정적 리뷰임에도 sentiment가 Positive로 감지되었다.
 
-증명 1-2-1. Seriously though, it’s just dull과 nothing이라는 표현을 대문자로 변경해 보았다.
 
-코드
+**증명 1-2-1.** Seriously though, it’s just dull과 nothing이라는 표현을 대문자로 변경해 보았다.
+
+- 코드
 ```python
 from nltk.corpus import movie_reviews
 from nltk.classify import NaiveBayesClassifier
@@ -432,7 +440,7 @@ for review in input_reviews:
     print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
 ```
 
-결과
+- 결과
 ```
 Movie review predictions:
 
@@ -444,10 +452,12 @@ Probability: 0.6
 >부정적인 리뷰이지만 부정적인 단어를 사용하기보다는 비꼬는 듯한 표현을 사용했기 때문에 감정을 정확하게 잡아내지 못한 것으로 보인다.
 
 
-가설 2. ‘Best’ 필터에서 더 위에 위치한 리뷰일수록 정확도 점수가 더 높을 것이다.
-증명 2-1. 더 위에 위치한 리뷰
 
-코드
+### 가설 2. ‘Best’ 필터에서 더 위에 위치한 리뷰일수록 정확도 점수가 더 높을 것이다.
+
+**증명 2-1.** 더 위에 위치한 리뷰
+
+- 코드
 ```python
 from nltk.corpus import movie_reviews
 from nltk.classify import NaiveBayesClassifier
@@ -503,7 +513,7 @@ for review in input_reviews:
     print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
 ```
 
-결과
+- 결과
 ```
 Movie review predictions:
 
@@ -513,9 +523,9 @@ Probability: 1.0
 ```
 
 
-증명 2-2 더 아래에 위치한 리뷰
+**증명 2-2** 더 아래에 위치한 리뷰
 
-코드
+- 코드
 ```python
 from nltk.corpus import movie_reviews
 from nltk.classify import NaiveBayesClassifier
@@ -570,7 +580,7 @@ for review in input_reviews:
     print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
 ```
 
-결과
+- 결과
 ```
 Movie review predictions:
 
@@ -579,10 +589,13 @@ Predicted sentiment: Positive
 Probability: 0.82
 ```
 >필터에서 아래에 위치한 리뷰의 점수가 더 낮게 나왔다.
-가설 3. 긍정적인 리뷰들 중, 스포일러가 포함된 리뷰는 그렇지 않은 리뷰보다 정확도 점수가 더 높을 것이다.
-증명 3-1. 스포일러가 포함된 리뷰
 
-코드
+
+### 가설 3. 긍정적인 리뷰들 중, 스포일러가 포함된 리뷰는 그렇지 않은 리뷰보다 정확도 점수가 더 높을 것이다.
+
+**증명 3-1.** 스포일러가 포함된 리뷰
+
+- 코드
 ```python
 from nltk.corpus import movie_reviews
 from nltk.classify import NaiveBayesClassifier
@@ -636,7 +649,7 @@ for review in input_reviews:
     print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
 ```
 
-결과
+- 결과
 ```
 Movie review predictions:
 
@@ -645,9 +658,9 @@ Predicted sentiment: Positive
 Probability: 1.0
 ```
 
-증명 3-2. 스포일러가 포함되지 않은 리뷰
+**증명 3-2.** 스포일러가 포함되지 않은 리뷰
 
-코드
+- 코드
 ```python
 from nltk.corpus import movie_reviews
 from nltk.classify import NaiveBayesClassifier
@@ -702,7 +715,7 @@ for review in input_reviews:
     print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
 ```
 
-결과
+- 결과
 ```
 Movie review predictions:
 
