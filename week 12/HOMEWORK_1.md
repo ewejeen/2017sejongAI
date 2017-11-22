@@ -72,10 +72,383 @@ I get why movies like this get nominated for Best Picture. Seriously though, it'
 
 
 ### 가설 검증
+
 가설 1. 주요 단어를 소문자에서 대문자로 바꿔 쓰면 정확도 점수가 더 높아질 것이다.
+
 증명 1-1. 긍정적 리뷰
+
 코드
+
 ``` python
+from nltk.corpus import movie_reviews
+from nltk.classify import NaiveBayesClassifier
+from nltk.classify.util import accuracy as nltk_accuracy
+
+def extract_features(words):
+    return dict([(word, True) for word in words])
+
+
+if __name__=='__main__':
+    fileids_pos = movie_reviews.fileids('pos')
+    fileids_neg = movie_reviews.fileids('neg')
+
+    features_pos = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Positive') for f in fileids_pos]
+    features_neg = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Negative') for f in fileids_neg]
+
+threshold = 0.8
+num_pos = int(threshold * len(features_pos))
+num_neg = int(threshold * len(features_neg))
+
+features_train = features_pos[:num_pos] + features_neg[:num_neg]
+features_test = features_pos[num_pos:] + features_neg[num_neg:]
+
+print('\nNumber of training datapoints:', len(features_train))
+print('Number of test datapoints:', len(features_test))
+
+classifier = NaiveBayesClassifier.train(features_train)
+print('\nAccuracy of the classifier:', nltk_accuracy(classifier, features_test))
+
+N = 15
+print('\nTop ' + str(N) + ' most informative words:')
+for i, item in enumerate(classifier.most_informative_features()):
+    print(str(i+1) + '. ' + item[0])
+    if i == N - 1:
+        break
+
+input_reviews = ["It won best film, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in riveting fashion by Tom Macarthy who does not waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals. Just brilliant."
+    ]
+
+print("\nMovie review predictions:")
+for review in input_reviews:
+    print("\nReview:", review)
+
+    probabilities = classifier.prob_classify(extract_features(review.split()))
+
+    predicted_sentiment = probabilities.max()
+
+    print("Predicted sentiment:", predicted_sentiment)
+    print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
+
+```
+
+결과
+
+```
+Number of training datapoints: 1600
+Number of test datapoints: 400
+
+Accuracy of the classifier: 0.735
+
+Top 15 most informative words:
+1. outstanding
+2. insulting
+3. vulnerable
+4. ludicrous
+5. uninvolving
+6. avoids
+7. astounding
+8. fascination
+9. darker
+10. anna
+11. seagal
+12. affecting
+13. symbol
+14. animators
+15. idiotic
+
+Movie review predictions:
+
+Review: It won best film, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in riveting fashion by Tom Macarthy who does not waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals. Just brilliant.
+Predicted sentiment: Positive
+Probability: 0.82
+```
+
+증명 1-1-1. best film과 just brilliant 라는 표현을 대문자로 표현해 보았다.
+
+코드
+
+```python
+from nltk.corpus import movie_reviews
+from nltk.classify import NaiveBayesClassifier
+from nltk.classify.util import accuracy as nltk_accuracy
+
+def extract_features(words):
+    return dict([(word, True) for word in words])
+
+
+if __name__=='__main__':
+    fileids_pos = movie_reviews.fileids('pos')
+    fileids_neg = movie_reviews.fileids('neg')
+
+    features_pos = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Positive') for f in fileids_pos]
+    features_neg = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Negative') for f in fileids_neg]
+
+threshold = 0.8
+num_pos = int(threshold * len(features_pos))
+num_neg = int(threshold * len(features_neg))
+
+features_train = features_pos[:num_pos] + features_neg[:num_neg]
+features_test = features_pos[num_pos:] + features_neg[num_neg:]
+
+print('\nNumber of training datapoints:', len(features_train))
+print('Number of test datapoints:', len(features_test))
+
+classifier = NaiveBayesClassifier.train(features_train)
+print('\nAccuracy of the classifier:', nltk_accuracy(classifier, features_test))
+
+N = 15
+print('\nTop ' + str(N) + ' most informative words:')
+for i, item in enumerate(classifier.most_informative_features()):
+    print(str(i+1) + '. ' + item[0])
+    if i == N - 1:
+        break
+
+input_reviews = ["It won BEST FILM, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in riveting fashion by Tom Macarthy who does not waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals. JUST BRILLIANT."
+    ]
+
+print("\nMovie review predictions:")
+for review in input_reviews:
+    print("\nReview:", review)
+
+    probabilities = classifier.prob_classify(extract_features(review.split()))
+
+    predicted_sentiment = probabilities.max()
+
+    print("Predicted sentiment:", predicted_sentiment)
+    print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
+```
+
+결과
+
+```
+Movie review predictions:
+
+Review: It won BEST FILM, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in riveting fashion by Tom Macarthy who does NOT waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals. JUST BRILLIANT.
+Predicted sentiment: Positive
+Probability: 0.77
+```
+> Probaility 수치가 오히려 감소한 것을 볼 수 있다.
+
+
+증명 1-1-2. best film, just brilliant, riveting을 대문자로 표현해 보았다.
+
+```python
+from nltk.corpus import movie_reviews
+from nltk.classify import NaiveBayesClassifier
+from nltk.classify.util import accuracy as nltk_accuracy
+
+def extract_features(words):
+    return dict([(word, True) for word in words])
+
+
+if __name__=='__main__':
+    fileids_pos = movie_reviews.fileids('pos')
+    fileids_neg = movie_reviews.fileids('neg')
+
+    features_pos = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Positive') for f in fileids_pos]
+    features_neg = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Negative') for f in fileids_neg]
+
+threshold = 0.8
+num_pos = int(threshold * len(features_pos))
+num_neg = int(threshold * len(features_neg))
+
+features_train = features_pos[:num_pos] + features_neg[:num_neg]
+features_test = features_pos[num_pos:] + features_neg[num_neg:]
+
+print('\nNumber of training datapoints:', len(features_train))
+print('Number of test datapoints:', len(features_test))
+
+classifier = NaiveBayesClassifier.train(features_train)
+print('\nAccuracy of the classifier:', nltk_accuracy(classifier, features_test))
+
+N = 15
+print('\nTop ' + str(N) + ' most informative words:')
+for i, item in enumerate(classifier.most_informative_features()):
+    print(str(i+1) + '. ' + item[0])
+    if i == N - 1:
+        break
+
+input_reviews = ["It won BEST FILM, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in RIVETING fashion by Tom Macarthy who does not waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals. JUST BRILLIANT."
+    ]
+
+print("\nMovie review predictions:")
+for review in input_reviews:
+    print("\nReview:", review)
+
+    probabilities = classifier.prob_classify(extract_features(review.split()))
+
+    predicted_sentiment = probabilities.max()
+
+    print("Predicted sentiment:", predicted_sentiment)
+    print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
+```
+
+결과
+```
+Movie review predictions:
+
+Review: It won BEST FILM, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in RIVETING fashion by Tom Macarthy who does not waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals. JUST BRILLIANT.
+Predicted sentiment: Negative
+Probability: 0.58
+```
+> Sentiment가 Negative로 바뀌었으며, Probaility 수치도 감소하였다.
+
+
+증명 1-2. 부정적
+
+### 가설 검증 중에 알아낸 것
+결과의 윗부분에 나타나는 Accuracy와 Informative words는 내가 입력한 리뷰에 대한 정보가 아니고, nltk.corpus의 movie_reviews에 저장되어 있는 1000개의 positive reviews와 1000개의 negative reviews에 대한 것이다. 즉, 이 내용들은 내가 입력한 리뷰들과 아무런 관련이 없다. threshold(한계치)로 설정한 값은 test 데이터와 training 데이터를 나누는 기준이 되는 수치인데, 어떤 것을 나타내는 지는 정확히 모르겠지만, accuracy of the classifier와 각각의 probability에 영향을 준다.
+
+
+증명 1-2. 부정적 리뷰
+
+코드
+```python
+from nltk.corpus import movie_reviews
+from nltk.classify import NaiveBayesClassifier
+from nltk.classify.util import accuracy as nltk_accuracy
+
+def extract_features(words):
+    return dict([(word, True) for word in words])
+
+
+if __name__=='__main__':
+    fileids_pos = movie_reviews.fileids('pos')
+    fileids_neg = movie_reviews.fileids('neg')
+
+    features_pos = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Positive') for f in fileids_pos]
+    features_neg = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Negative') for f in fileids_neg]
+
+threshold = 0.8
+num_pos = int(threshold * len(features_pos))
+num_neg = int(threshold * len(features_neg))
+
+features_train = features_pos[:num_pos] + features_neg[:num_neg]
+features_test = features_pos[num_pos:] + features_neg[num_neg:]
+
+print('\nNumber of training datapoints:', len(features_train))
+print('Number of test datapoints:', len(features_test))
+
+classifier = NaiveBayesClassifier.train(features_train)
+print('\nAccuracy of the classifier:', nltk_accuracy(classifier, features_test))
+
+N = 15
+print('\nTop ' + str(N) + ' most informative words:')
+for i, item in enumerate(classifier.most_informative_features()):
+    print(str(i+1) + '. ' + item[0])
+    if i == N - 1:
+        break
+
+input_reviews = ["I get why movies like this get nominated for Best Picture. Seriously though, it's just dull. There is nothing in this movie that is cinematically interesting. Spotlight could have been done as a picture book with a few sentences of dialogue per page and Mark Ruffalo's happy face or sad face plastered on top. 3 stars though just because a very interesting subject."
+
+
+    ]
+
+print("\nMovie review predictions:")
+for review in input_reviews:
+    print("\nReview:", review)
+
+    probabilities = classifier.prob_classify(extract_features(review.split()))
+
+    predicted_sentiment = probabilities.max()
+
+    print("Predicted sentiment:", predicted_sentiment)
+    print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
+```
+
+결과
+```
+Movie review predictions:
+
+Review: I get why movies like this get nominated for Best Picture. Seriously though, it's just dull. There is nothing in this movie that is cinematically interesting. Spotlight could have been done as a picture book with a few sentences of dialogue per page and Mark Ruffalo's happy face or sad face plastered on top. 3 stars though just because a very interesting subject.
+Predicted sentiment: Positive
+Probability: 0.5
+```
+>분명한 부정적 리뷰임에도 sentiment가 Positive로 감지되었다.
+
+증명 1-2-1. Seriously though, it’s just dull과 nothing이라는 표현을 대문자로 변경해 보았다.
+
+코드
+```python
+from nltk.corpus import movie_reviews
+from nltk.classify import NaiveBayesClassifier
+from nltk.classify.util import accuracy as nltk_accuracy
+
+def extract_features(words):
+    return dict([(word, True) for word in words])
+
+
+if __name__=='__main__':
+    fileids_pos = movie_reviews.fileids('pos')
+    fileids_neg = movie_reviews.fileids('neg')
+
+    features_pos = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Positive') for f in fileids_pos]
+    features_neg = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Negative') for f in fileids_neg]
+
+threshold = 0.8
+num_pos = int(threshold * len(features_pos))
+num_neg = int(threshold * len(features_neg))
+
+features_train = features_pos[:num_pos] + features_neg[:num_neg]
+features_test = features_pos[num_pos:] + features_neg[num_neg:]
+
+print('\nNumber of training datapoints:', len(features_train))
+print('Number of test datapoints:', len(features_test))
+
+classifier = NaiveBayesClassifier.train(features_train)
+print('\nAccuracy of the classifier:', nltk_accuracy(classifier, features_test))
+
+N = 15
+print('\nTop ' + str(N) + ' most informative words:')
+for i, item in enumerate(classifier.most_informative_features()):
+    print(str(i+1) + '. ' + item[0])
+    if i == N - 1:
+        break
+
+input_reviews = ["I get why movies like this get nominated for Best Picture. SERIOUSLY THOUGH, IT'S JUST DULL. There is NOTHING in this movie that is cinematically interesting. Spotlight could have been done as a picture book with a few sentences of dialogue per page and Mark Ruffalo's happy face or sad face plastered on top. 3 stars though just because a very interesting subject."
+
+
+    ]
+
+print("\nMovie review predictions:")
+for review in input_reviews:
+    print("\nReview:", review)
+
+    probabilities = classifier.prob_classify(extract_features(review.split()))
+
+    predicted_sentiment = probabilities.max()
+
+    print("Predicted sentiment:", predicted_sentiment)
+    print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
+```
+
+결과
+```
+Movie review predictions:
+
+Review: I get why movies like this get nominated for Best Picture. SERIOUSLY THOUGH, IT'S JUST DULL. There is NOTHING in this movie that is cinematically interesting. Spotlight could have been done as a picture book with a few sentences of dialogue per page and Mark Ruffalo's happy face or sad face plastered on top. 3 stars though just because a very interesting subject.
+Predicted sentiment: Positive
+Probability: 0.6
+```
+
+>부정적인 리뷰이지만 부정적인 단어를 사용하기보다는 비꼬는 듯한 표현을 사용했기 때문에 감정을 정확하게 잡아내지 못한 것으로 보인다.
+
+
+가설 2. ‘Best’ 필터에서 더 위에 위치한 리뷰일수록 정확도 점수가 더 높을 것이다.
+증명 2-1. 더 위에 위치한 리뷰
+
+코드
+```python
 from nltk.corpus import movie_reviews
 from nltk.classify import NaiveBayesClassifier
 from nltk.classify.util import accuracy as nltk_accuracy
@@ -115,6 +488,7 @@ for i, item in enumerate(classifier.most_informative_features()):
 
 input_reviews = [
     "Everything about this movie is outstanding -- the performances, the way the true events are handled, the cinematography. In this day of digital news, this movie makes us stand back and realize what we may lose in the way of investigative journalism as we slowly kill off print media. The focus remains the child abuse scandal in the archdiocese in Boston. That reflects the conflict the characters face and deal with when events make them rethink the focus of their article. The movie is riveting, though we know the outcome."
+
     ]
 
 print("\nMovie review predictions:")
@@ -127,37 +501,218 @@ for review in input_reviews:
 
     print("Predicted sentiment:", predicted_sentiment)
     print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
-
 ```
 
 결과
 ```
-Number of training datapoints: 1600
-Number of test datapoints: 400
-
-Accuracy of the classifier: 0.735
-
-Top 15 most informative words:
-1. outstanding
-2. insulting
-3. vulnerable
-4. ludicrous
-5. uninvolving
-6. astounding
-7. avoids
-8. fascination
-9. seagal
-10. darker
-11. anna
-12. symbol
-13. animators
-14. affecting
-15. idiotic
-
 Movie review predictions:
 
 Review: Everything about this movie is outstanding -- the performances, the way the true events are handled, the cinematography. In this day of digital news, this movie makes us stand back and realize what we may lose in the way of investigative journalism as we slowly kill off print media. The focus remains the child abuse scandal in the archdiocese in Boston. That reflects the conflict the characters face and deal with when events make them rethink the focus of their article. The movie is riveting, though we know the outcome.
 Predicted sentiment: Positive
 Probability: 1.0
 ```
-### 결과 해석
+
+
+증명 2-2 더 아래에 위치한 리뷰
+
+코드
+```python
+from nltk.corpus import movie_reviews
+from nltk.classify import NaiveBayesClassifier
+from nltk.classify.util import accuracy as nltk_accuracy
+
+def extract_features(words):
+    return dict([(word, True) for word in words])
+
+
+if __name__=='__main__':
+    fileids_pos = movie_reviews.fileids('pos')
+    fileids_neg = movie_reviews.fileids('neg')
+
+    features_pos = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Positive') for f in fileids_pos]
+    features_neg = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Negative') for f in fileids_neg]
+
+threshold = 0.8
+num_pos = int(threshold * len(features_pos))
+num_neg = int(threshold * len(features_neg))
+
+features_train = features_pos[:num_pos] + features_neg[:num_neg]
+features_test = features_pos[num_pos:] + features_neg[num_neg:]
+
+print('\nNumber of training datapoints:', len(features_train))
+print('Number of test datapoints:', len(features_test))
+
+classifier = NaiveBayesClassifier.train(features_train)
+print('\nAccuracy of the classifier:', nltk_accuracy(classifier, features_test))
+
+N = 15
+print('\nTop ' + str(N) + ' most informative words:')
+for i, item in enumerate(classifier.most_informative_features()):
+    print(str(i+1) + '. ' + item[0])
+    if i == N - 1:
+        break
+
+input_reviews = [
+    "It won best film, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in riveting fashion by Tom Macarthy who does not waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals. Just brilliant."
+    ]
+
+print("\nMovie review predictions:")
+for review in input_reviews:
+    print("\nReview:", review)
+
+    probabilities = classifier.prob_classify(extract_features(review.split()))
+
+    predicted_sentiment = probabilities.max()
+
+    print("Predicted sentiment:", predicted_sentiment)
+    print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
+```
+
+결과
+```
+Movie review predictions:
+
+Review: It won best film, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in riveting fashion by Tom Macarthy who does not waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals. Just brilliant.
+Predicted sentiment: Positive
+Probability: 0.82
+```
+>필터에서 아래에 위치한 리뷰의 점수가 더 낮게 나왔다.
+가설 3. 긍정적인 리뷰들 중, 스포일러가 포함된 리뷰는 그렇지 않은 리뷰보다 정확도 점수가 더 높을 것이다.
+증명 3-1. 스포일러가 포함된 리뷰
+
+코드
+```python
+from nltk.corpus import movie_reviews
+from nltk.classify import NaiveBayesClassifier
+from nltk.classify.util import accuracy as nltk_accuracy
+
+def extract_features(words):
+    return dict([(word, True) for word in words])
+
+
+if __name__=='__main__':
+    fileids_pos = movie_reviews.fileids('pos')
+    fileids_neg = movie_reviews.fileids('neg')
+
+    features_pos = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Positive') for f in fileids_pos]
+    features_neg = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Negative') for f in fileids_neg]
+
+threshold = 0.8
+num_pos = int(threshold * len(features_pos))
+num_neg = int(threshold * len(features_neg))
+
+features_train = features_pos[:num_pos] + features_neg[:num_neg]
+features_test = features_pos[num_pos:] + features_neg[num_neg:]
+
+print('\nNumber of training datapoints:', len(features_train))
+print('Number of test datapoints:', len(features_test))
+
+classifier = NaiveBayesClassifier.train(features_train)
+print('\nAccuracy of the classifier:', nltk_accuracy(classifier, features_test))
+
+N = 15
+print('\nTop ' + str(N) + ' most informative words:')
+for i, item in enumerate(classifier.most_informative_features()):
+    print(str(i+1) + '. ' + item[0])
+    if i == N - 1:
+        break
+
+input_reviews = ["*** This review may contain spoilers *** For me this film was beautifully tragic; by this I mean it was a fantastically acted film and gripping; but I'm disgusted and mortified that it actually happened. It was good that the film focused on how the conspiracy into the abuse was covered up; for me it was a preference than focusing on the victims and bringing any more agony to them. It brought a tear to my eye to know the depths that this went on (and probably still does) and the number of victims that were involved. As someone who has a criminology degree with a focus on child abuse this film was particularly poignant. The end provides a list of places where it has been uncovered; this is heartbreaking." 
+    ]
+
+print("\nMovie review predictions:")
+for review in input_reviews:
+    print("\nReview:", review)
+
+    probabilities = classifier.prob_classify(extract_features(review.split()))
+
+    predicted_sentiment = probabilities.max()
+
+    print("Predicted sentiment:", predicted_sentiment)
+    print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
+```
+
+결과
+```
+Movie review predictions:
+
+Review: *** This review may contain spoilers *** For me this film was beautifully tragic; by this I mean it was a fantastically acted film and gripping; but I'm disgusted and mortified that it actually happened. It was good that the film focused on how the conspiracy into the abuse was covered up; for me it was a preference than focusing on the victims and bringing any more agony to them. It brought a tear to my eye to know the depths that this went on (and probably still does) and the number of victims that were involved. As someone who has a criminology degree with a focus on child abuse this film was particularly poignant. The end provides a list of places where it has been uncovered; this is heartbreaking.
+Predicted sentiment: Positive
+Probability: 1.0
+```
+
+증명 3-2. 스포일러가 포함되지 않은 리뷰
+
+코드
+```python
+from nltk.corpus import movie_reviews
+from nltk.classify import NaiveBayesClassifier
+from nltk.classify.util import accuracy as nltk_accuracy
+
+def extract_features(words):
+    return dict([(word, True) for word in words])
+
+
+if __name__=='__main__':
+    fileids_pos = movie_reviews.fileids('pos')
+    fileids_neg = movie_reviews.fileids('neg')
+
+    features_pos = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Positive') for f in fileids_pos]
+    features_neg = [(extract_features(movie_reviews.words(
+        fileids=[f])), 'Negative') for f in fileids_neg]
+
+threshold = 0.8
+num_pos = int(threshold * len(features_pos))
+num_neg = int(threshold * len(features_neg))
+
+features_train = features_pos[:num_pos] + features_neg[:num_neg]
+features_test = features_pos[num_pos:] + features_neg[num_neg:]
+
+print('\nNumber of training datapoints:', len(features_train))
+print('Number of test datapoints:', len(features_test))
+
+classifier = NaiveBayesClassifier.train(features_train)
+print('\nAccuracy of the classifier:', nltk_accuracy(classifier, features_test))
+
+N = 15
+print('\nTop ' + str(N) + ' most informative words:')
+for i, item in enumerate(classifier.most_informative_features()):
+    print(str(i+1) + '. ' + item[0])
+    if i == N - 1:
+        break
+
+input_reviews = [
+    "It won best film, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in riveting fashion by Tom Macarthy who does not waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals. Just brilliant."
+    ]
+
+print("\nMovie review predictions:")
+for review in input_reviews:
+    print("\nReview:", review)
+
+    probabilities = classifier.prob_classify(extract_features(review.split()))
+
+    predicted_sentiment = probabilities.max()
+
+    print("Predicted sentiment:", predicted_sentiment)
+    print("Probability:", round(probabilities.prob(predicted_sentiment), 2))
+```
+
+결과
+```
+Movie review predictions:
+
+Review: It won best film, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in riveting fashion by Tom Macarthy who does not waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals. Just brilliant.
+Predicted sentiment: Positive
+Probability: 0.82
+```
+>스포일러가 포함된 리뷰가 정확도 점수가 더 높은 것을 볼 수 있다.
+
+
+
+
+### 가설 검증 결과
