@@ -46,17 +46,12 @@ Everything about this movie is outstanding -- the performances, the way the true
 The focus remains the child abuse scandal in the archdiocese in Boston. That reflects the conflict the characters face and deal with when events make them rethink the focus of their article.
 The movie is riveting, though we know the outcome.
 
-이 영화는 모든 것이 훌륭하다 – 연기, 실화를 다루는 방식, 촬영술. 지금과 같은 디지털 뉴스의 시대에, 이 영화는 우리로 하여금 한발짝 물러서서 우리가 인쇄 미디어를 천천히 죽여가며 조사 보도의 방식에서 잃어가고 있는 것을 깨닫게 해준다.
-이야기의 초점은 보스턴 가톨릭 사제들의 아동 학대 스캔들에 맞춰져 있다. 그것은 캐릭터들이 직면하고 여러 사건들이 캐릭터들로 하여금 그들의 기사의 초점에 대해 다시 생각하게 할 때의 갈등을 반영한다.
-영화는 결말을 알고있는 사람이라도 눈을 못 떼게 한다. 
 
 2.
 
 It won best film, deservedly so. This is a film that resonated with me long after I watched it. The complicated tale of the investigation of paedophile priests in Boston and the publication of it is told in riveting fashion by Tom Macarthy who does not waste a frame or a scene. I never felt the running time or in any way disbelieved any of the actors in their portrayals.
 Just brilliant.
 
-이 영화는 최우수작품상을 수상했고, 그럴 자격이 있다. 이 영화는 내가 관람한지 한참 뒤에도 오랫동안 머리 속에 남았다. 보스턴의 소아성애 성직자들에 대한 조사의 복잡한 이야기와 그것의 보도는 프레임 하나, 장면 하나 낭비하지 않는 톰 맥카시에 의해 눈을 뗄 수 없는 방식으로 이야기 된다. 시간이 어떻게 가는 줄도 모르고 봤으며 배우들은 정말 신뢰 가는 묘사를 해주었다.
-그저 대단하다.
 
 3.
 
@@ -65,19 +60,11 @@ Just brilliant.
 For me this film was beautifully tragic; by this I mean it was a fantastically acted film and gripping; but I'm disgusted and mortified that it actually happened.
 It was good that the film focused on how the conspiracy into the abuse was covered up; for me it was a preference than focusing on the victims and bringing any more agony to them. It brought a tear to my eye to know the depths that this went on (and probably still does) and the number of victims that were involved. As someone who has a criminology degree with a focus on child abuse this film was particularly poignant. The end provides a list of places where it has been uncovered; this is heartbreaking. 
 
-*** 스포일러를 포함할 수 있음 ***
-
-나에게 이 영화는 아름다운 비극이었다; 환상적이고 눈을 사로잡는 영화이지만 실제로 일어나는 일이라는 것에 경멸감과 모멸감을 느낀다는 뜻이다.
-영화가 그 학대가 어떻게 감춰졌는지에 초점을 맞춘 점은 좋았다; 개인적 의견으로는 피해자들에게 초점을 맞추고 그들을 더 괴롭게 하는 것 보다는 이 방식이 좋았다. 이 사건이 얼마나 심각했는지 (아마 여전히 일어날 수도 있지만), 그리고 얼마나 많은 피해자가 있었는지를 생각하니 눈물이 났다. 아동 학대 관련 범죄학 학위를 가지고 있는 사람으로서, 이 영화는 특히 가슴이 아팠다. 영화의 마지막에 아동 학대 사실이 밝혀진 지역들의 리스트가 나온다; 가슴이 찢어지는 심정이었다.
-
 
 
 ## 부정적 리뷰
 I get why movies like this get nominated for Best Picture. Seriously though, it's just dull. There is nothing in this movie that is cinematically interesting. Spotlight could have been done as a picture book with a few sentences of dialogue per page and Mark Ruffalo's happy face or sad face plastered on top.
 3 stars though just because a very interesting subject.
-
-왜 이런 류의 영화가 최우수작품상을 수상하는 지는 알겠다. 그런데 정말 이 영화는 따분하다. 이 영화에는 작품적으로 흥미로운 부분이 전혀 없다. ‘스포트라이트는’ 페이지마다 몇 문장정도 써 있고, 마크 러팔로의 행복한 표정이나 슬픈 표정으로 위에 도배가 돼있는 그림책으로 만들어도 됐을 뻔했다.
-그래도 주제는 매우 흥미로우니 별 세 개를 주겠다.
 
 
 
